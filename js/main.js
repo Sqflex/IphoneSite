@@ -69,5 +69,80 @@ document.addEventListener('DOMContentLoaded', () =>{
         }
     }; */
     
+    const accordion = () =>{
+       /* const characteristicsTitle = document.querySelectorAll('.characteristics__title');
+        const characteristicsDescription = document.querySelectorAll('.characteristics__description');
+
+        characteristicsTitle.forEach((elem, i) =>{
+            elem.addEventListener('click', () =>{
+                elem.classList.toggle('active');
+                characteristicsDescription[i].classList.toggle('active');
+            });
+        }); */
+
+        const characteristicsList = document.querySelector('.characteristics__list');
+        const characteristicsItem = document.querySelectorAll('.characteristics__item');
+
+        const open = (button, dropDown) =>{
+            closeAll();
+            dropDown.style.height = `${dropDown.scrollHeight}px`
+            button.classList.add('active');
+            dropDown.classList.add('active');
+        };
+
+        const close = (button, dropDown) =>{
+            button.classList.remove('active');
+            dropDown.classList.remove('active');
+            dropDown.style.height = '';
+        };
+
+        const closeAll = (button, dropDown) =>{
+            characteristicsItem.forEach((elem) =>{
+                if(elem.children[0] !== button && elem.children[1] !== dropDown){
+                    close(elem.children[0], elem.children[1]);
+                }
+            })
+        }
+
+        characteristicsList.addEventListener('click', (event) =>{
+            const target = event.target;
+            if(target.classList.contains('characteristics__title')){
+                const parent = target.closest('.characteristics__item');
+                const describ = parent.querySelector('.characteristics__description');
+                describ.classList.contains('active') ? close(target, describ) : open(target,describ);
+            }
+        });
+
+    }
+
+    const modal = () =>{
+        const cardDetailsButtonBuy = document.querySelector('.card-details__button_buy');
+        const modalBlock = document.querySelector('.modal');
+        const bodyBlock = document.querySelector('body');
+        
+        cardDetailsButtonBuy.addEventListener('click', () =>{
+            modalBlock.classList.add('open');
+        })
+
+        modalBlock.addEventListener('click', (event) =>{
+            const target = event.target;
+            if(target.classList.contains('modal')){
+                modalBlock.classList.remove('open');
+            }
+            else if(target.classList.contains('modal__close')){
+                modalBlock.classList.remove('open');
+            }
+        })
+
+        bodyBlock.addEventListener('keydown', (event) =>{
+            const target = event.key;
+            if(target === "Escape"){
+                modalBlock.classList.remove('open');
+            }
+        })
+    }
+
     tabs();
+    accordion();
+    modal();
 });
